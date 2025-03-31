@@ -31,6 +31,12 @@ class Carta:
         else:
             return int(self.valor)
 
+    def __str__(self)->str:
+        if self.oculta:
+            return OCULTA
+        else:
+            return f"{self.valor}{self.pinta}"
+
 
 class Baraja:
 
@@ -102,6 +108,13 @@ class Mano:
     def limpiar(self):
         self.cartas.clear()
 
+
+    def __str__(self)-> str:
+        str_mano =""
+        for carta in self.cartas:
+            str_mano+=f"{str(carta):^5}"
+            return str_mano
+
 @dataclass
 class Casa:
     mano:Mano = field(init=False, default=None)
@@ -130,8 +143,8 @@ class Jugador :
     def agrgar_fichas(self,fichas:int):
         self.fichas +=fichas
 
-    def tiene_fichas(self)->bool:
-        return self.fichas >0
+    def tiene_fichas(self,apuesta:int =1)->bool:
+        return self.fichas >= apuesta
 
 class Blackjack:
     def __init__(self):
@@ -146,8 +159,10 @@ class Blackjack:
 
     def iniciar_juego(self,apuesta:int):
         self.apuesta_inicial=apuesta
-        self.jugador.mano.limpiar()
-        self.cupier.mano.limpiar()
+        if self.jugador.mano:
+            self.jugador.mano.limpiar()
+        if self.cupier.mano:
+            self.cupier.mano.limpiar()
         self.baraja.reiniciar()
         self.baraja.revolver()
 
@@ -163,6 +178,11 @@ class Blackjack:
     def repartir_carta_a_jugador (self):
         self.jugador.recibir_carta(self.baraja.repartir_carta())
 
+    def repartir_carta_a_la_casa:
+
+
+
+
 
     def destapar_mano_de_la_casa (self):
         self.cupier.mano.destapar()
@@ -174,7 +194,7 @@ class Blackjack:
 
 
     def finalizar_juego(self):
-        if self.jugaor_gano():
+        if self.jugador_gano():
             self.jugador.agrgar_fichas(self.apuesta_inicial)
         elif self.casa_gano():
             self.jugador.agrgar_fichas(self.apuesta_inicial)
