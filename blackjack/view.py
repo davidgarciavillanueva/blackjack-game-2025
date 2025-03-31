@@ -77,6 +77,7 @@ class ConsolaBlackjack:
         nombres
 
 
+
     def mostrar_manos(self,mano_casa, mano_jugador):
         print(f"\n{'MANO CASA':<15}\n{str(mano_casa):<15}")
         print(f"{'VALOR: ' + str(mano_casa.calcular_valor())}")
